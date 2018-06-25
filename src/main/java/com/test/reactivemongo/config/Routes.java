@@ -20,7 +20,7 @@ public class Routes {
     public RouterFunction<ServerResponse> router() {
         //kotlin dsl looks much better :(
         return route(
-                GET("/note/{noteId}").and(contentType(MediaType.APPLICATION_JSON_UTF8)),
+                GET("/note/{noteId}"),
                 noteHandler::getNote
         ).andRoute(
                 PUT("/note/{noteId}").and(contentType(MediaType.APPLICATION_JSON_UTF8)).and(accept(MediaType.APPLICATION_JSON_UTF8)),

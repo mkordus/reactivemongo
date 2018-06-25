@@ -19,8 +19,8 @@ public class NoteHandler {
     public Mono<ServerResponse> getNote(ServerRequest request) {
         String noteId = request.pathVariable(NOTE_ID);
         return repository.findById(noteId)
+                .switchIfEmpty(Mono.just(Note.builder().build()))
                 .map(note -> new NoteDto(note.getContent()))
-                .switchIfEmpty(Mono.just(new NoteDto("")))
                 .flatMap(note -> ok().body(Mono.just(new NoteDto(note.getContent())), NoteDto.class));
     }
 
@@ -28,7 +28,7 @@ public class NoteHandler {
         String noteId = request.pathVariable(NOTE_ID);
         return request.bodyToMono(NoteDto.class)
                 .map(noteDto -> Note.builder().id(noteId).content(noteDto.getContent()).build())
-                .flatMap(note -> repository.save(note))
+                .flatMap(repository::save)
                 .flatMap(note -> ok().body(Mono.just(new NoteDto(note.getContent())), NoteDto.class));
     }
 }
