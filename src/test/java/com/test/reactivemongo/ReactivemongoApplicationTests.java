@@ -13,8 +13,7 @@ class ReactivemongoApplicationTests extends IntegrationTest {
 
         webTestClient.get().uri(uri)
                 .exchange()
-                .expectStatus().isOk()
-                .expectBody().jsonPath("$.content", "");
+                .expectStatus().isNotFound();
 
         webTestClient.put().uri(uri)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
