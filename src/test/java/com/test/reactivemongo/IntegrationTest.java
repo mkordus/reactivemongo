@@ -20,6 +20,7 @@ public abstract class IntegrationTest {
 
     private static final String TEST_DB_NAME = "test";
 
+    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     @Autowired
     private MongoClient mongoClient;
 
